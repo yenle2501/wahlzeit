@@ -1,0 +1,21 @@
+package org.wahlzeit.model;
+
+import org.junit.*;
+import static org.junit.Assert.*;
+
+/**
+ * Test cases for Location class
+ */
+public class LocationTest {
+
+        /***
+         * Testcase for Constructor of Location-class
+         */
+        @Test
+        public void testLocationConstructor(){
+                Coordinate coord = new Coordinate(2.0,3.0,4.0);
+                Location location = new Location(coord);
+                assertEquals(coord,location.coord);
+        }
+}
+
