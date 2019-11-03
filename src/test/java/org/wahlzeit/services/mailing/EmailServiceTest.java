@@ -76,7 +76,7 @@ public class EmailServiceTest {
 	}
 
 	@Test
-    public void testSendEmailWithoutbbc(){
+    public void testSendEmailWithoutbcc(){
         EmailAddress sendEmailAddress = EmailAddress.getFromString("test345@test.de");
 
         try{
@@ -88,7 +88,7 @@ public class EmailServiceTest {
     }
 
     @Test
-    public void tesSendEmailWithbbc(){
+    public void tesSendEmailWithbcc(){
         EmailAddress sendEmailAddress = EmailAddress.getFromString("test345@test.de");
 
         try{
