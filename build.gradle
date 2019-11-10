@@ -21,7 +21,7 @@ apply plugin: 'war'
 apply plugin: 'appengine'
 
 wrapper {
-	gradleVersion = '4.10'
+	gradleVersion = '5.0' //'4.10'
 }
 
 // check if JAVA_HOME is set, otherwise build tasks will fail
