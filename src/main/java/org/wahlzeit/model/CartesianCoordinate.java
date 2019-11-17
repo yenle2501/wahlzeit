@@ -1,0 +1,157 @@
+package org.wahlzeit.model;
+/**
+ * This class represents the cartesian coordinate system
+ */
+public class CartesianCoordinate implements Coordinate {
+
+    //x,y,z represent point x, y and z in the x-axis, y-axis and z-axis
+    private  double x;
+    private  double y;
+    private  double z;
+
+    /**
+     * two double values are assumed equal if it's different is lower than this THRESHOLD
+     */
+    private static final double THRESHOLD =  0.00000000001;
+
+    // constructor
+    public CartesianCoordinate(double x, double y, double z){
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    /**
+     * this method converts a coordinate to a Cartesian Coordinate
+     * @methodtype conversion
+     * @return a Cartesian Coordinate
+     * */
+    @Override
+    public CartesianCoordinate asCartesianCoordinate() {
+        return this;
+    }
+/**
+ * get Distance of this coordinate to a given coordinate
+ * @methodtype get
+ * @param given_coord the given coordinate
+ * @return distance between this coordinate and the given coordinate
+ */
+  @Override
+    public double getCartesianDistance(Coordinate given_coord) {
+      if(given_coord == null){
+          throw new NullPointerException("the given coordinate must not be null");
+      }
+      CartesianCoordinate cartesianCoordinate = given_coord.asCartesianCoordinate();
+
+      double power_distance = Math.pow(cartesianCoordinate.x - this.x,2) + Math.pow(cartesianCoordinate.y - this.y,2) + Math.pow(cartesianCoordinate.z - this.z,2);
+      double distance = Math.sqrt(power_distance);
+
+      return distance;
+    }
+
+    /**
+     * this method converts a coordinate to a Spherical Coordinate
+     * @methodtype conversion
+     * @return a Spherical Coordinate
+     */
+    @Override
+    public SphericCoordinate asSphericCoordinate() {
+        double power = Math.pow(this.x,2) + Math.pow(this.y,2) + Math.pow(this.z,2);
+        double r = Math.sqrt(power);
+        double theta = (r > 0.0) ? Math.acos(this.z/r) : 0.0;
+        double phi = (x != 0) ?  Math.atan2(this.y, this.x) :  0.0;
+        return new SphericCoordinate(r,theta,phi);
+    }
+
+    /**
+     * @methodtype get
+     * @param coordinate a Coordinate
+     * @return central angle between this Coordinate and the given Coordinate
+    */
+    @Override
+    public double getCentralAngle(Coordinate coordinate) {
+        SphericCoordinate sphericCoordinate = asSphericCoordinate();
+        double result = sphericCoordinate.getCentralAngle(coordinate);
+        return result;
+    }
+
+    /**
+     * compare this coordinate and the given coordinate
+     * @methodtype boolean query
+     * @param coordinate the given coordinate
+     * @return true : if coordinates are equal
+     *         false: otherwise
+     */
+    @Override
+    public boolean isEqual(Coordinate coordinate) {
+        if (coordinate == null) {
+            return false;
+        }
+        CartesianCoordinate cartesianCoordinate = coordinate.asCartesianCoordinate();
+        if(cartesianCoordinate == null){
+              return false;
+        }
+        if(cartesianCoordinate.x - this.x < THRESHOLD && cartesianCoordinate.y - this.y < THRESHOLD && cartesianCoordinate.z - this.z < THRESHOLD){
+                return true;
+        }
+        return false;
+    }
+
+    /** compare this coordinate and the given object
+     * @methodtype boolean query
+     * @param obj the given object
+     * @return true : if the coordinate and the given object are equal
+     *         false: otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this){
+            return true;
+        }
+        if (obj instanceof CartesianCoordinate) {
+            return isEqual((CartesianCoordinate) obj);
+        }
+        return false;
+    }
+
+    /**
+     * compute hash codes
+     * @methodtype get
+     */
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = (int) (Double.doubleToLongBits(x) ^ (Double.doubleToLongBits(x) >>> 32));
+        hash = 31 * hash + (int) (Double.doubleToLongBits(y) ^ (Double.doubleToLongBits(y)>>> 32));
+        hash = 31 * hash + (int) (Double.doubleToLongBits(z) ^ (Double.doubleToLongBits(z)>>> 32));
+
+        return hash;
+    }
+
+
+    /** get x of the coordinate
+     * @methodtype get
+     * @return x
+     */
+    public double getX(){
+        return x;
+    }
+
+    /** get y of the coordinate
+     * @methodtype get
+     * @return y
+     */
+    public double getY(){
+        return y;
+    }
+
+    /** get z of the coordinate
+     * @methodtype get
+     * @return z
+     */
+    public double getZ(){
+        return z;
+    }
+
+
+}

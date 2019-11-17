@@ -15,7 +15,8 @@ import org.junit.runners.Suite;
         org.wahlzeit.model.persistence.DatastoreAdapterTest.class,
         //model
         org.wahlzeit.model.AccessRightsTest.class,
-        org.wahlzeit.model.CoordinateTest.class,
+        org.wahlzeit.model.CartesianCoordinateTest.class,
+        org.wahlzeit.model.SphericCoordinateTest.class,
         org.wahlzeit.model.FlagReasonTest.class,
         org.wahlzeit.model.GenderTest.class,
         org.wahlzeit.model.GuestTest.class,

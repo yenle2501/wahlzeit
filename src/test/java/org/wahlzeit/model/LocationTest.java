@@ -13,7 +13,7 @@ public class LocationTest {
          */
         @Test
         public void testLocationConstructor(){
-                Coordinate coord = new Coordinate(2.0,3.0,4.0);
+                CartesianCoordinate coord = new CartesianCoordinate(2.0,3.0,4.0);
                 Location location = new Location(coord);
                 assertEquals(coord,location.coord);
         }
