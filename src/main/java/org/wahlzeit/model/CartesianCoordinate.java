@@ -2,7 +2,7 @@ package org.wahlzeit.model;
 /**
  * This class represents the cartesian coordinate system
  */
-public class CartesianCoordinate implements Coordinate {
+public class CartesianCoordinate extends  AbstractCoordinate {
 
     //x,y,z represent point x, y and z in the x-axis, y-axis and z-axis
     private  double x;
@@ -30,13 +30,14 @@ public class CartesianCoordinate implements Coordinate {
     public CartesianCoordinate asCartesianCoordinate() {
         return this;
     }
-/**
- * get Distance of this coordinate to a given coordinate
- * @methodtype get
- * @param given_coord the given coordinate
- * @return distance between this coordinate and the given coordinate
- */
-  @Override
+
+    /**
+    * get Distance of this coordinate to a given coordinate
+    * @methodtype get
+    * @param given_coord the given coordinate
+    * @return distance between this coordinate and the given coordinate
+    */
+    @Override
     public double getCartesianDistance(Coordinate given_coord) {
       if(given_coord == null){
           throw new NullPointerException("the given coordinate must not be null");
@@ -63,17 +64,6 @@ public class CartesianCoordinate implements Coordinate {
         return new SphericCoordinate(r,theta,phi);
     }
 
-    /**
-     * @methodtype get
-     * @param coordinate a Coordinate
-     * @return central angle between this Coordinate and the given Coordinate
-    */
-    @Override
-    public double getCentralAngle(Coordinate coordinate) {
-        SphericCoordinate sphericCoordinate = asSphericCoordinate();
-        double result = sphericCoordinate.getCentralAngle(coordinate);
-        return result;
-    }
 
     /**
      * compare this coordinate and the given coordinate
@@ -97,22 +87,6 @@ public class CartesianCoordinate implements Coordinate {
         return false;
     }
 
-    /** compare this coordinate and the given object
-     * @methodtype boolean query
-     * @param obj the given object
-     * @return true : if the coordinate and the given object are equal
-     *         false: otherwise
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == this){
-            return true;
-        }
-        if (obj instanceof CartesianCoordinate) {
-            return isEqual((CartesianCoordinate) obj);
-        }
-        return false;
-    }
 
     /**
      * compute hash codes

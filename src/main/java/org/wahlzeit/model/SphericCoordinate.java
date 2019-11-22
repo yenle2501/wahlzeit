@@ -3,7 +3,7 @@ package org.wahlzeit.model;
  * This class represents the spherical coordinate system
  * Source: https://en.wikipedia.org/wiki/Spherical_coordinate_system
  */
-public class SphericCoordinate implements Coordinate {
+public class SphericCoordinate extends  AbstractCoordinate {
     // the radial distance: radius  >= 0
     private final double radius;
     // the polar angle: 0 <= theta <= PI
@@ -70,19 +70,6 @@ public class SphericCoordinate implements Coordinate {
 
         CartesianCoordinate cartesianCoordinate =  new CartesianCoordinate(x, y, z);
         return cartesianCoordinate;
-    }
-
-    /**
-     * @methodtype get
-     * @param coordinate the given coordinate
-     * @return distance between this coordinate and the given cartesian coordinate
-     */
-    @Override
-    public double getCartesianDistance(Coordinate coordinate) {
-
-        CartesianCoordinate cartesianCoordinate = this.asCartesianCoordinate();
-        double result = cartesianCoordinate.getCartesianDistance(coordinate);
-        return result;
     }
 
     /**
@@ -154,21 +141,7 @@ public class SphericCoordinate implements Coordinate {
         return false;
     }
 
-    /**
-     * @methodtype boolean query
-     *
-    * */
-    @Override
-    public boolean equals(Object object) {
-        if(object == this){
-            return true;
-        }
-        if (object instanceof SphericCoordinate) {
-            return isEqual((SphericCoordinate) object);
-        }
 
-        return false;
-    }
 
     /**
      * compute hash codes
