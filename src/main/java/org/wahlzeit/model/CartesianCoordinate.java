@@ -46,7 +46,7 @@ public class CartesianCoordinate extends  AbstractCoordinate {
      */
     private  void assertValidY(double y){
         if(Double.isNaN(y)){
-            throw new IllegalArgumentException("x-coordinate is invalid. x must be a number");
+            throw new IllegalArgumentException("y-coordinate is invalid. y must be a number");
         }
     }
     /**
@@ -55,7 +55,7 @@ public class CartesianCoordinate extends  AbstractCoordinate {
      */
     private  void  assertValidZ(double z){
         if(Double.isNaN(z)){
-            throw new IllegalArgumentException("x-coordinate is invalid. x must be a number");
+            throw new IllegalArgumentException("z-coordinate is invalid. z must be a number");
         }
     }
     /**
