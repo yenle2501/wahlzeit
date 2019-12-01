@@ -15,25 +15,34 @@ public class SphericCoordinate extends  AbstractCoordinate {
      */
     private static final double THRESHOLD =  0.00000000001;
 
-    /**
-     *  @methodtype: constructor
+    /**@param radius:the radial distance: radius  >= 0
+     * @param theta: the polar angle: 0 <= theta <= PI
+     * @param phi :the azimuthal angle: 0 <= phi < 2PI
+     * @methodtype: constructor
     */
     public SphericCoordinate(double radius, double theta, double phi) {
-
-        checkValidRadius(radius);
-        checkValidTheta(theta);
-        checkValidPhi(phi);
 
         this.radius = radius;
         this.theta = theta;
         this.phi = phi;
+
+        assertClassInvariants();
+    }
+
+    /** this method checks class invariant.
+     * @methodtype assert
+     */
+    private void assertClassInvariants(){
+        assertValidRadius(radius);
+        assertValidTheta(theta);
+        assertValidPhi(phi);
     }
 
     /**
      * check value of Radius
      * @methodtpye assertion
      */
-    private void checkValidRadius(double radius){
+    private void assertValidRadius(double radius){
         if (radius < 0 ) {
             throw new IllegalArgumentException("value of radius is invalid. Radius must be greater or equal 0");
         }
@@ -42,7 +51,7 @@ public class SphericCoordinate extends  AbstractCoordinate {
      * check value of Theta
      * @methodtpye assertion
      */
-    private void checkValidTheta(double theta){
+    private void assertValidTheta(double theta){
         if (theta < 0 || theta > Math.PI) {
             throw new IllegalArgumentException("value of theta is invalid. Theta must be in range [0, PI]");
         }
@@ -51,7 +60,7 @@ public class SphericCoordinate extends  AbstractCoordinate {
     * check value of Phi
      * @methodtpye assertion
     */
-    private void checkValidPhi(double phi){
+    private void assertValidPhi(double phi){
         if (phi < 0 || phi >= 2 * Math.PI) {
             throw new IllegalArgumentException("value of phi is invalid. Phi must be in range [0, 2*PI]");
         }
@@ -103,7 +112,11 @@ public class SphericCoordinate extends  AbstractCoordinate {
         double acosParam = Math.sin(theta) * Math.sin(sphericCoordinate.theta)
                 + Math.cos(theta) * Math.cos(sphericCoordinate.theta) * Math.cos(deltaPhi);
 
-        return Math.acos(acosParam);
+       double centralAngle = Math.acos(acosParam);
+
+       assert centralAngle >= 0;
+
+       return centralAngle;
 
     }
     /**

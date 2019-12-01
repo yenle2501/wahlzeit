@@ -19,8 +19,45 @@ public class CartesianCoordinate extends  AbstractCoordinate {
         this.x = x;
         this.y = y;
         this.z = z;
+
+        assertClassInvariants();
     }
 
+    /** this method checks class invariant.
+     * @methodtype assert
+     */
+    private void assertClassInvariants(){
+        assertValidX(x);
+        assertValidY(y);
+        assertValidZ(z);
+    }
+    /**
+     * check value of x
+     * @methodtpye assertion
+     */
+    private  void assertValidX(double x){
+        if(Double.isNaN(x)){
+            throw new IllegalArgumentException("x-coordinate is invalid. x must be a number");
+        }
+    }
+    /**
+     * check value of y
+     * @methodtpye assertion
+     */
+    private  void assertValidY(double y){
+        if(Double.isNaN(y)){
+            throw new IllegalArgumentException("x-coordinate is invalid. x must be a number");
+        }
+    }
+    /**
+     * check value of z
+     * @methodtpye assertion
+     */
+    private  void  assertValidZ(double z){
+        if(Double.isNaN(z)){
+            throw new IllegalArgumentException("x-coordinate is invalid. x must be a number");
+        }
+    }
     /**
      * this method converts a coordinate to a Cartesian Coordinate
      * @methodtype conversion
@@ -47,6 +84,8 @@ public class CartesianCoordinate extends  AbstractCoordinate {
       double power_distance = Math.pow(cartesianCoordinate.x - this.x,2) + Math.pow(cartesianCoordinate.y - this.y,2) + Math.pow(cartesianCoordinate.z - this.z,2);
       double distance = Math.sqrt(power_distance);
 
+      assert distance >= 0;
+
       return distance;
     }
 
@@ -69,7 +108,7 @@ public class CartesianCoordinate extends  AbstractCoordinate {
      * compare this coordinate and the given coordinate
      * @methodtype boolean query
      * @param coordinate the given coordinate
-     * @return true : if coordinates are equal
+     * @return true : if coordinates are equalTheta
      *         false: otherwise
      */
     @Override
@@ -86,7 +125,6 @@ public class CartesianCoordinate extends  AbstractCoordinate {
         }
         return false;
     }
-
 
     /**
      * compute hash codes

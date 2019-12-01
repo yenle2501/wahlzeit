@@ -13,6 +13,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 
         CartesianCoordinate cartesianCoordinate = this.asCartesianCoordinate();
         double result = cartesianCoordinate.getCartesianDistance(coordinate);
+        assert result >= 0;
         return result;
     }
 
@@ -25,6 +26,7 @@ public abstract class AbstractCoordinate implements Coordinate {
     public double getCentralAngle(Coordinate coordinate) {
         SphericCoordinate sphericCoordinate = asSphericCoordinate();
         double result = sphericCoordinate.getCentralAngle(coordinate);
+        assert result >= 0;
         return result;
     }
 
