@@ -34,6 +34,14 @@ public class SphericCoordinateTest {
             spheric2 = new SphericCoordinate(8.774964387392123, 0.8178885561654512, 0.8960553845713439);
         }
 
+         @Test(expected = IllegalArgumentException.class)
+         public void testConstructor_nullValue(){
+             SphericCoordinate  spheric_n1 = new SphericCoordinate(Double.NaN, 0.6405223126794245, 1.1071487177940904);
+             SphericCoordinate  spheric_n2 = new SphericCoordinate(8.774964387392123, Double.NaN, 1.1071487177940904);
+             SphericCoordinate  spheric_n3 = new SphericCoordinate(8.774964387392123, 0.6405223126794245, Double.NaN);
+
+         }
+
         @Test
         public void testConstructor(){
             assertEquals(cartesian1.getX(),1.0, THRESHOLD);
@@ -53,6 +61,7 @@ public class SphericCoordinateTest {
             assertEquals(spheric2.getPhi() ,0.8960553845713439, THRESHOLD)  ;
 
         }
+
 
         @Test
         public void testAsCartesianCoordinate(){
@@ -89,6 +98,11 @@ public class SphericCoordinateTest {
             assertEquals(0.23659206192641294, spheric2.getCentralAngle(spheric1), THRESHOLD);
         }
 
+        @Test(expected=IllegalArgumentException.class)
+        public void testGetCentralAngle_nullValue(){
+            spheric1.getCentralAngle(null);
+            spheric2.getCentralAngle(null);
+        }
 
         @Test
         public void testIsEqual(){
@@ -100,7 +114,14 @@ public class SphericCoordinateTest {
             assertFalse(spheric1.isEqual(spheric2));
         }
 
-        @Test
+        @Test(expected=IllegalArgumentException.class)
+         public void testIsEqual_nullValue(){
+             spheric1.isEqual(null);
+             spheric2.isEqual(null);
+         }
+
+
+    @Test
         public void testEquals(){
             assertTrue(spheric1.equals(spheric1));
             assertFalse(spheric2.equals(spheric1));

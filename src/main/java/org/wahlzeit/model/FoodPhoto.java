@@ -28,7 +28,6 @@ public class FoodPhoto extends Photo {
      * @methodtype constructor
      * */
     public FoodPhoto(PhotoId myId){
-
         super(myId);
     }
 
@@ -55,7 +54,10 @@ public class FoodPhoto extends Photo {
      * @methodtype set
      *
      * */
-    public void setDishname(String dishname) {
+    public void setDishname(String dishname) throws IllegalArgumentException{
+        if (dishname == null) {
+            throw new IllegalArgumentException("dishname must not be null");
+        }
         this.dishname = dishname;
     }
 }

@@ -35,4 +35,12 @@ public class FoodPhotoTest {
         assertEquals(foodPhoto1.getDishname(),"beef_pho");
     }
 
+    /** testcase for method setdishname() with null value of dishname
+     * */
+    @Test(expected = IllegalArgumentException.class)
+    public void testSetNullDishname(){
+        foodPhoto1.setDishname(null);
+    }
+
 }
+

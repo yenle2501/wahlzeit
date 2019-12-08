@@ -51,6 +51,14 @@ public class CartesianCoordinateTest {
 
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void test_invalidConstructor(){
+        CartesianCoordinate  cartesian_i1 = new CartesianCoordinate(Double.NaN,5.0,6.0);
+        CartesianCoordinate  cartesian_i2 = new CartesianCoordinate(4.0,Double.NaN,6.0);
+        CartesianCoordinate  cartesian_i3 = new CartesianCoordinate(4.0,5.0,Double.NaN);
+    }
+
+
     @Test
     public void testAsCartesianCoordinate(){
 
@@ -58,6 +66,10 @@ public class CartesianCoordinateTest {
         assertEquals(cartesian2, cartesian2.asCartesianCoordinate());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetCartesianCoordinate_nullValue(){
+        cartesian1.getCartesianDistance(null);
+    }
 
     @Test
     public void testGetCartesianCoordinate(){
@@ -93,6 +105,11 @@ public class CartesianCoordinateTest {
         assertTrue(cartesian1.isEqual(cartesian1));
         assertTrue(cartesian2.isEqual(cartesian2));
         assertFalse(cartesian1.isEqual(cartesian2));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIsEqual_nullValue(){
+        cartesian1.isEqual(null);
     }
 
     @Test
