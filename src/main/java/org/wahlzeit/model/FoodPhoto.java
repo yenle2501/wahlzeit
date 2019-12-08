@@ -2,7 +2,6 @@ package org.wahlzeit.model;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Subclass;
-
 /**
  * A food photo represents a user-provided (uploaded) photo.
  */
@@ -29,8 +28,8 @@ public class FoodPhoto extends Photo {
      * @methodtype constructor
      * */
     public FoodPhoto(PhotoId myId){
-        super(myId);
 
+        super(myId);
     }
 
     /**

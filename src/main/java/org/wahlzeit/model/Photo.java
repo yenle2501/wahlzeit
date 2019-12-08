@@ -149,7 +149,7 @@ public class Photo extends DataObject {
 	/**
 	 * @methodtype constructor
 	 */
-	public Photo(PhotoId myId) {
+	public Photo(PhotoId myId){
 		id = myId;
 
 		incWriteCount();

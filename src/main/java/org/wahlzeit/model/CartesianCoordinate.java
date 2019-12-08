@@ -1,4 +1,5 @@
 package org.wahlzeit.model;
+
 /**
  * This class represents the cartesian coordinate system
  */
@@ -15,49 +16,37 @@ public class CartesianCoordinate extends  AbstractCoordinate {
     private static final double THRESHOLD =  0.00000000001;
 
     // constructor
-    public CartesianCoordinate(double x, double y, double z){
+    public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException{
         this.x = x;
         this.y = y;
         this.z = z;
-
-        assertClassInvariants();
+        try {
+            assertClassInvariants();
+        }
+        catch(IllegalArgumentException e){
+            throw new IllegalArgumentException("Cartesian Coordinate constructor is not valid");
+        }
     }
 
+    /**
+     * check valid double value
+     * @methodtpye assertion
+     */
+    protected void assertIsValidDouble(double value) {
+        if(Double.isNaN(value) || !Double.isFinite(value)){
+            throw new IllegalArgumentException("variable is not a double value");
+        }
+    }
     /** this method checks class invariant.
      * @methodtype assert
      */
-    private void assertClassInvariants(){
-        assertValidX(x);
-        assertValidY(y);
-        assertValidZ(z);
+    private void assertClassInvariants() throws IllegalArgumentException{
+        assertIsValidDouble(x);
+        assertIsValidDouble(y);
+        assertIsValidDouble(z);
     }
-    /**
-     * check value of x
-     * @methodtpye assertion
-     */
-    private  void assertValidX(double x){
-        if(Double.isNaN(x)){
-            throw new IllegalArgumentException("x-coordinate is invalid. x must be a number");
-        }
-    }
-    /**
-     * check value of y
-     * @methodtpye assertion
-     */
-    private  void assertValidY(double y){
-        if(Double.isNaN(y)){
-            throw new IllegalArgumentException("y-coordinate is invalid. y must be a number");
-        }
-    }
-    /**
-     * check value of z
-     * @methodtpye assertion
-     */
-    private  void  assertValidZ(double z){
-        if(Double.isNaN(z)){
-            throw new IllegalArgumentException("z-coordinate is invalid. z must be a number");
-        }
-    }
+
+
     /**
      * this method converts a coordinate to a Cartesian Coordinate
      * @methodtype conversion
@@ -75,16 +64,15 @@ public class CartesianCoordinate extends  AbstractCoordinate {
     * @return distance between this coordinate and the given coordinate
     */
     @Override
-    public double getCartesianDistance(Coordinate given_coord) {
-      if(given_coord == null){
-          throw new NullPointerException("the given coordinate must not be null");
-      }
-      CartesianCoordinate cartesianCoordinate = given_coord.asCartesianCoordinate();
+    public double getCartesianDistance(Coordinate given_coord)  throws IllegalArgumentException  {
+        assertIsNotNull(given_coord,"The given Coordinate");
 
-      double power_distance = Math.pow(cartesianCoordinate.x - this.x,2) + Math.pow(cartesianCoordinate.y - this.y,2) + Math.pow(cartesianCoordinate.z - this.z,2);
-      double distance = Math.sqrt(power_distance);
+        CartesianCoordinate cartesianCoordinate = given_coord.asCartesianCoordinate();
 
-      assert distance >= 0;
+        double power_distance = Math.pow(cartesianCoordinate.x - this.x,2) + Math.pow(cartesianCoordinate.y - this.y,2) + Math.pow(cartesianCoordinate.z - this.z,2);
+        double distance = Math.sqrt(power_distance);
+
+         assert distance >= 0;
 
       return distance;
     }
@@ -112,14 +100,10 @@ public class CartesianCoordinate extends  AbstractCoordinate {
      *         false: otherwise
      */
     @Override
-    public boolean isEqual(Coordinate coordinate) {
-        if (coordinate == null) {
-            return false;
-        }
+    public boolean isEqual(Coordinate coordinate)  throws IllegalArgumentException {
+        assertIsNotNull(coordinate,"The given Coordinate");
+
         CartesianCoordinate cartesianCoordinate = coordinate.asCartesianCoordinate();
-        if(cartesianCoordinate == null){
-              return false;
-        }
         if(cartesianCoordinate.x - this.x < THRESHOLD && cartesianCoordinate.y - this.y < THRESHOLD && cartesianCoordinate.z - this.z < THRESHOLD){
                 return true;
         }

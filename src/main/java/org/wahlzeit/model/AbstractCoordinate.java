@@ -3,15 +3,23 @@ package org.wahlzeit.model;
 public abstract class AbstractCoordinate implements Coordinate {
 
 
+    protected void assertIsNotNull(Object object, String argument){
+        if(object==null) {
+            throw new IllegalArgumentException(argument + " must not be null");
+        }
+    }
+
+
     /**
      * @methodtype get
      * @param coordinate the given coordinate
      * @return distance between this coordinate and the given cartesian coordinate
      */
     @Override
-    public double getCartesianDistance(Coordinate coordinate) {
-
+    public double getCartesianDistance(Coordinate coordinate) throws IllegalArgumentException {
+        assertIsNotNull(coordinate,"The given coordinate" );
         CartesianCoordinate cartesianCoordinate = this.asCartesianCoordinate();
+
         double result = cartesianCoordinate.getCartesianDistance(coordinate);
         assert result >= 0;
         return result;
@@ -23,8 +31,10 @@ public abstract class AbstractCoordinate implements Coordinate {
      * @return central angle between this Coordinate and the given Coordinate
      */
     @Override
-    public double getCentralAngle(Coordinate coordinate) {
+    public double getCentralAngle (Coordinate coordinate)  throws  IllegalArgumentException{
+        assertIsNotNull(coordinate,"The given coordinate");
         SphericCoordinate sphericCoordinate = asSphericCoordinate();
+
         double result = sphericCoordinate.getCentralAngle(coordinate);
         assert result >= 0;
         return result;
@@ -37,7 +47,7 @@ public abstract class AbstractCoordinate implements Coordinate {
      *         false: otherwise
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj){
         if(obj == this){
             return true;
         }

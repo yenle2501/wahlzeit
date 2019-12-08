@@ -1,7 +1,6 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.services.LogBuilder;
-
 import java.util.logging.Logger;
 /**
  * An FoodPhotoFactory for creating photos and related objects.
@@ -42,7 +41,7 @@ public class FoodPhotoFactory  extends PhotoFactory{
      * Method to set the singleton instance of PhotoFactory.
      *
      */
-    protected static synchronized void setInstance(FoodPhotoFactory foodphotoFactory) {
+    protected static synchronized void setInstance(FoodPhotoFactory foodphotoFactory) throws IllegalStateException{
         if (instance != null) {
             throw new IllegalStateException("attempt to initalize FoodPhotoFactory twice");
         }
@@ -64,8 +63,10 @@ public class FoodPhotoFactory  extends PhotoFactory{
      * @methodtype factory
      */
     @Override
-    public FoodPhoto createPhoto(PhotoId id) {
-
+    public FoodPhoto createPhoto(PhotoId id) throws IllegalArgumentException{
+        if(id == null){
+            throw new IllegalArgumentException("Photo Id should not be null");
+        }
         return new FoodPhoto(id);
     }
 

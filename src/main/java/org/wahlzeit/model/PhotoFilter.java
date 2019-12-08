@@ -125,6 +125,7 @@ public class PhotoFilter implements Serializable {
 	 *
 	 */
 	protected void collectFilterConditions(List<String> filterConditions) {
+
 		String un = getUserName();
 		if (!StringUtil.isNullOrEmptyString(un)) {
 			filterConditions.add("un:" + Tags.asTag(un));

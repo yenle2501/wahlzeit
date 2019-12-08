@@ -80,6 +80,7 @@ public class PhotoManager extends ObjectManager {
 	 *
 	 */
 	public final boolean hasPhoto(String id) {
+		if(id == null) return false;
 		return hasPhoto(PhotoId.getIdFromString(id));
 	}
 
@@ -347,6 +348,7 @@ public class PhotoManager extends ObjectManager {
 	 * @methodtype command
 	 */
 	public void addPhoto(Photo photo) throws IOException {
+
 		PhotoId id = photo.getId();
 		assertIsNewPhoto(id);
 		doAddPhoto(photo);

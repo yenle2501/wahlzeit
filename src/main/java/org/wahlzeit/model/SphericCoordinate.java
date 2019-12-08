@@ -1,4 +1,5 @@
 package org.wahlzeit.model;
+
 /**
  * This class represents the spherical coordinate system
  * Source: https://en.wikipedia.org/wiki/Spherical_coordinate_system
@@ -26,7 +27,13 @@ public class SphericCoordinate extends  AbstractCoordinate {
         this.theta = theta;
         this.phi = phi;
 
-        assertClassInvariants();
+        try {
+            assertClassInvariants();
+        }
+        catch( IllegalArgumentException e){
+            throw new IllegalArgumentException("one of 3 paramenters is invalid.");
+
+        }
     }
 
     /** this method checks class invariant.
@@ -42,7 +49,13 @@ public class SphericCoordinate extends  AbstractCoordinate {
      * check value of Radius
      * @methodtpye assertion
      */
-    private void assertValidRadius(double radius){
+    private void assertValidRadius(double radius) throws IllegalArgumentException{
+
+        try{
+            assertIsValidDouble(radius);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("phi is invalid");
+        }
         if (radius < 0 ) {
             throw new IllegalArgumentException("value of radius is invalid. Radius must be greater or equal 0");
         }
@@ -51,7 +64,14 @@ public class SphericCoordinate extends  AbstractCoordinate {
      * check value of Theta
      * @methodtpye assertion
      */
-    private void assertValidTheta(double theta){
+    private void assertValidTheta(double theta) throws IllegalArgumentException{
+
+        try{
+            assertIsValidDouble(theta);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("phi is invalid");
+        }
+
         if (theta < 0 || theta > Math.PI) {
             throw new IllegalArgumentException("value of theta is invalid. Theta must be in range [0, PI]");
         }
@@ -60,7 +80,12 @@ public class SphericCoordinate extends  AbstractCoordinate {
     * check value of Phi
      * @methodtpye assertion
     */
-    private void assertValidPhi(double phi){
+    private void assertValidPhi(double phi) throws IllegalArgumentException{
+       try{
+             assertIsValidDouble(phi);
+        } catch (IllegalArgumentException e) {
+             throw new IllegalArgumentException("phi is invalid");
+        }
         if (phi < 0 || phi >= 2 * Math.PI) {
             throw new IllegalArgumentException("value of phi is invalid. Phi must be in range [0, 2*PI]");
         }
@@ -78,6 +103,7 @@ public class SphericCoordinate extends  AbstractCoordinate {
         double z = radius * Math.cos(theta);
 
         CartesianCoordinate cartesianCoordinate =  new CartesianCoordinate(x, y, z);
+
         return cartesianCoordinate;
     }
 
@@ -99,15 +125,11 @@ public class SphericCoordinate extends  AbstractCoordinate {
      *           https://en.wikipedia.org/wiki/Spherical_coordinate_system
      */
     @Override
-    public double getCentralAngle(Coordinate given_coord) {
-        if (given_coord == null) {
-            throw new NullPointerException("the given given_coord must not be null");
-        }
+    public double getCentralAngle(Coordinate given_coord) throws IllegalArgumentException{
+        assertIsNotNull(given_coord,"The given Coordinate" );
 
         SphericCoordinate sphericCoordinate = given_coord.asSphericCoordinate();
-        if (sphericCoordinate == null) {
-            throw new NullPointerException("the spherical Coordinate must not be null");
-        }
+
         double deltaPhi = Math.abs(phi - sphericCoordinate.phi);
         double acosParam = Math.sin(theta) * Math.sin(sphericCoordinate.theta)
                 + Math.cos(theta) * Math.cos(sphericCoordinate.theta) * Math.cos(deltaPhi);
@@ -127,14 +149,11 @@ public class SphericCoordinate extends  AbstractCoordinate {
      *         false: otherwise
      */
     @Override
-    public boolean isEqual(Coordinate coordinate) {
-        if (coordinate == null) {
-            return false;
-        }
+    public boolean isEqual(Coordinate coordinate) throws IllegalArgumentException{
+        assertIsNotNull(coordinate,"The given Coordinate" );
+
         SphericCoordinate sphericCoordinate= coordinate.asSphericCoordinate();
-        if (sphericCoordinate == null) {
-            return false;
-        }
+
         return isDoubleEqual(sphericCoordinate.radius, radius)
                 && isDoubleEqual(sphericCoordinate.theta, theta)
                 && isDoubleEqual(sphericCoordinate.phi, phi);
@@ -147,7 +166,10 @@ public class SphericCoordinate extends  AbstractCoordinate {
      * @return true: if different between two values is lower than threshold
      *         false: otherwise
      */
-    private boolean isDoubleEqual(double value1, double value2){
+    private boolean isDoubleEqual(double value1, double value2) throws IllegalArgumentException{
+        assertIsValidDouble(value1);
+        assertIsValidDouble(value2);
+
         if(Math.abs(value1 - value2) <= THRESHOLD){
             return true;
         }
@@ -155,6 +177,15 @@ public class SphericCoordinate extends  AbstractCoordinate {
     }
 
 
+    /**
+     * check valid double value
+     * @methodtpye assertion
+     */
+    protected void assertIsValidDouble(double value) {
+        if(Double.isNaN(value) || !Double.isFinite(value)){
+            throw new IllegalArgumentException("variable is not a double value");
+        }
+    }
 
     /**
      * compute hash codes
