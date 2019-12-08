@@ -80,7 +80,7 @@ public class PhotoManager extends ObjectManager {
 	 *
 	 */
 	public final boolean hasPhoto(String id) {
-		if(id == null) return false;
+		if(id == null) throw new IllegalArgumentException();
 		return hasPhoto(PhotoId.getIdFromString(id));
 	}
 

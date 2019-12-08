@@ -54,7 +54,7 @@ public class SphericCoordinate extends  AbstractCoordinate {
         try{
             assertIsValidDouble(radius);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("phi is invalid");
+            throw new IllegalArgumentException("radius is invalid");
         }
         if (radius < 0 ) {
             throw new IllegalArgumentException("value of radius is invalid. Radius must be greater or equal 0");
@@ -69,7 +69,7 @@ public class SphericCoordinate extends  AbstractCoordinate {
         try{
             assertIsValidDouble(theta);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("phi is invalid");
+            throw new IllegalArgumentException("theta is invalid");
         }
 
         if (theta < 0 || theta > Math.PI) {
