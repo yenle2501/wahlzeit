@@ -1,5 +1,6 @@
 package org.wahlzeit.model;
 
+import java.util.HashMap;
 /**
  * This class represents the spherical coordinate system
  * Source: https://en.wikipedia.org/wiki/Spherical_coordinate_system
@@ -15,6 +16,12 @@ public class SphericCoordinate extends  AbstractCoordinate {
      * two double values are assumed equal if it's different is lower than this THRESHOLD
      */
     private static final double THRESHOLD =  0.00000000001;
+
+    /**
+     * HashSet of all spherical coordinates
+     */
+    private static final HashMap<Integer,SphericCoordinate> coordinates = new HashMap<>();
+
 
     /**@param radius:the radial distance: radius  >= 0
      * @param theta: the polar angle: 0 <= theta <= PI
@@ -36,58 +43,24 @@ public class SphericCoordinate extends  AbstractCoordinate {
         }
     }
 
-    /** this method checks class invariant.
-     * @methodtype assert
-     */
-    private void assertClassInvariants(){
-        assertValidRadius(radius);
-        assertValidTheta(theta);
-        assertValidPhi(phi);
-    }
-
     /**
-     * check value of Radius
-     * @methodtpye assertion
+     * @methodtype factory
+     * @param radius:the radial distance: radius  >= 0
+     * @param theta: the polar angle: 0 <= theta <= PI
+     * @param phi :the azimuthal angle: 0 <= phi < 2PI
+     * @return a spherical coordinate
      */
-    private void assertValidRadius(double radius) throws IllegalArgumentException{
-
-        try{
-            assertIsValidDouble(radius);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("radius is invalid");
-        }
-        if (radius < 0 ) {
-            throw new IllegalArgumentException("value of radius is invalid. Radius must be greater or equal 0");
-        }
-    }
-    /**
-     * check value of Theta
-     * @methodtpye assertion
-     */
-    private void assertValidTheta(double theta) throws IllegalArgumentException{
-
-        try{
-            assertIsValidDouble(theta);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("theta is invalid");
-        }
-
-        if (theta < 0 || theta > Math.PI) {
-            throw new IllegalArgumentException("value of theta is invalid. Theta must be in range [0, PI]");
-        }
-    }
-    /**
-    * check value of Phi
-     * @methodtpye assertion
-    */
-    private void assertValidPhi(double phi) throws IllegalArgumentException{
-       try{
-             assertIsValidDouble(phi);
-        } catch (IllegalArgumentException e) {
-             throw new IllegalArgumentException("phi is invalid");
-        }
-        if (phi < 0 || phi >= 2 * Math.PI) {
-            throw new IllegalArgumentException("value of phi is invalid. Phi must be in range [0, 2*PI]");
+    public static SphericCoordinate getCoordinate(double radius, double theta, double phi) {
+        SphericCoordinate sphericCoordinate = new SphericCoordinate(radius, theta, phi);
+        int key =  sphericCoordinate.hashCode();
+        synchronized (coordinates) {
+            if(coordinates.get(key) == null){
+                coordinates.put(key,sphericCoordinate);
+                return sphericCoordinate;
+            }
+            else{
+                return coordinates.get(key);
+            }
         }
     }
 
@@ -102,7 +75,7 @@ public class SphericCoordinate extends  AbstractCoordinate {
         double y = radius * Math.sin(theta) * Math.sin(phi);
         double z = radius * Math.cos(theta);
 
-        CartesianCoordinate cartesianCoordinate =  new CartesianCoordinate(x, y, z);
+        CartesianCoordinate cartesianCoordinate = CartesianCoordinate.getCoordinate(x, y, z);
 
         return cartesianCoordinate;
     }
@@ -136,6 +109,7 @@ public class SphericCoordinate extends  AbstractCoordinate {
 
        double centralAngle = Math.acos(acosParam);
 
+       assert Double.isFinite(centralAngle);
        assert centralAngle >= 0;
 
        return centralAngle;
@@ -152,7 +126,7 @@ public class SphericCoordinate extends  AbstractCoordinate {
     public boolean isEqual(Coordinate coordinate) throws IllegalArgumentException{
         assertIsNotNull(coordinate,"The given Coordinate" );
 
-        SphericCoordinate sphericCoordinate= coordinate.asSphericCoordinate();
+        SphericCoordinate sphericCoordinate = coordinate.asSphericCoordinate();
 
         return isDoubleEqual(sphericCoordinate.radius, radius)
                 && isDoubleEqual(sphericCoordinate.theta, theta)
@@ -223,5 +197,61 @@ public class SphericCoordinate extends  AbstractCoordinate {
      */
     public double getPhi() {
         return phi;
+    }
+
+
+    /** this method checks class invariant.
+     * @methodtype assert
+     */
+    private void assertClassInvariants(){
+        assertValidRadius(radius);
+        assertValidTheta(theta);
+        assertValidPhi(phi);
+    }
+
+    /**
+     * check value of Radius
+     * @methodtpye assertion
+     */
+    private void assertValidRadius(double radius) throws IllegalArgumentException{
+
+        try{
+            assertIsValidDouble(radius);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("radius is invalid");
+        }
+        if (radius < 0 ) {
+            throw new IllegalArgumentException("value of radius is invalid. Radius must be greater or equal 0");
+        }
+    }
+    /**
+     * check value of Theta
+     * @methodtpye assertion
+     */
+    private void assertValidTheta(double theta) throws IllegalArgumentException{
+
+        try{
+            assertIsValidDouble(theta);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("theta is invalid");
+        }
+
+        if (theta < 0 || theta > Math.PI) {
+            throw new IllegalArgumentException("value of theta is invalid. Theta must be in range [0, PI]");
+        }
+    }
+    /**
+     * check value of Phi
+     * @methodtpye assertion
+     */
+    private void assertValidPhi(double phi) throws IllegalArgumentException{
+        try{
+            assertIsValidDouble(phi);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("phi is invalid");
+        }
+        if (phi < 0 || phi >= 2 * Math.PI) {
+            throw new IllegalArgumentException("value of phi is invalid. Phi must be in range [0, 2*PI]");
+        }
     }
 }

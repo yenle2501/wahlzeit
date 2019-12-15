@@ -1,14 +1,22 @@
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+
 /**
  * This class represents the cartesian coordinate system
  */
 public class CartesianCoordinate extends  AbstractCoordinate {
 
     //x,y,z represent point x, y and z in the x-axis, y-axis and z-axis
-    private  double x;
-    private  double y;
-    private  double z;
+    private final double x;
+    private final double y;
+    private final double z;
+
+
+    /**
+     * HashSet of all cartesian coordinates
+     */
+    private static final HashMap<Integer,CartesianCoordinate> coordinates = new HashMap<>();
 
     /**
      * two double values are assumed equal if it's different is lower than this THRESHOLD
@@ -17,9 +25,11 @@ public class CartesianCoordinate extends  AbstractCoordinate {
 
     // constructor
     public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException{
+
         this.x = x;
         this.y = y;
         this.z = z;
+
         try {
             assertClassInvariants();
         }
@@ -29,21 +39,24 @@ public class CartesianCoordinate extends  AbstractCoordinate {
     }
 
     /**
-     * check valid double value
-     * @methodtpye assertion
+     * @methodtype factory
+     * @param x value in x-axis
+     * @param y value in y-axis
+     * @param z value in z-axis
+     * @return a cartesian coordinate
      */
-    protected void assertIsValidDouble(double value) {
-        if(Double.isNaN(value) || !Double.isFinite(value)){
-            throw new IllegalArgumentException("variable is not a double value");
+    public static CartesianCoordinate getCoordinate(double x, double y , double z){
+        CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(x, y, z);
+        int key =  cartesianCoordinate.hashCode();
+        synchronized (coordinates) {
+            if(coordinates.get(key) == null){
+                coordinates.put(key,cartesianCoordinate);
+                return cartesianCoordinate;
+            }
+            else{
+                return coordinates.get(key);
+            }
         }
-    }
-    /** this method checks class invariant.
-     * @methodtype assert
-     */
-    private void assertClassInvariants() throws IllegalArgumentException{
-        assertIsValidDouble(x);
-        assertIsValidDouble(y);
-        assertIsValidDouble(z);
     }
 
 
@@ -72,7 +85,8 @@ public class CartesianCoordinate extends  AbstractCoordinate {
         double power_distance = Math.pow(cartesianCoordinate.x - this.x,2) + Math.pow(cartesianCoordinate.y - this.y,2) + Math.pow(cartesianCoordinate.z - this.z,2);
         double distance = Math.sqrt(power_distance);
 
-         assert distance >= 0;
+        assert Double.isFinite(distance);
+        assert distance >= 0;
 
       return distance;
     }
@@ -88,7 +102,8 @@ public class CartesianCoordinate extends  AbstractCoordinate {
         double r = Math.sqrt(power);
         double theta = (r > 0.0) ? Math.acos(this.z/r) : 0.0;
         double phi = (x != 0) ?  Math.atan2(this.y, this.x) :  0.0;
-        return new SphericCoordinate(r,theta,phi);
+
+        return SphericCoordinate.getCoordinate(r,theta,phi);
     }
 
 
@@ -149,5 +164,26 @@ public class CartesianCoordinate extends  AbstractCoordinate {
         return z;
     }
 
+
+
+    /**
+     * check valid double value
+     * @methodtpye assertion
+     */
+    protected void assertIsValidDouble(double value) {
+        if(Double.isNaN(value) || !Double.isFinite(value)){
+            throw new IllegalArgumentException("variable is not a double value");
+        }
+    }
+
+
+    /** this method checks class invariant.
+     * @methodtype assert
+     */
+    private void assertClassInvariants() throws IllegalArgumentException{
+        assertIsValidDouble(x);
+        assertIsValidDouble(y);
+        assertIsValidDouble(z);
+    }
 
 }

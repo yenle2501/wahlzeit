@@ -27,19 +27,24 @@ public class SphericCoordinateTest {
 
         @Before
         public void setUp(){
-            cartesian1 = new CartesianCoordinate(1.0,2.0,3.0);
-            cartesian2 = new CartesianCoordinate(4.0,5.0,6.0);
+            cartesian1 = CartesianCoordinate.getCoordinate(1.0,2.0,3.0);
+            cartesian2 = CartesianCoordinate.getCoordinate(4.0,5.0,6.0);
 
-            spheric1 = new SphericCoordinate(3.7416573867739413, 0.6405223126794245, 1.1071487177940904);
-            spheric2 = new SphericCoordinate(8.774964387392123, 0.8178885561654512, 0.8960553845713439);
+            spheric1 = SphericCoordinate.getCoordinate(3.7416573867739413, 0.6405223126794245, 1.1071487177940904);
+            spheric2 = SphericCoordinate.getCoordinate(8.774964387392123, 0.8178885561654512, 0.8960553845713439);
         }
 
          @Test(expected = IllegalArgumentException.class)
-         public void testConstructor_nullValue(){
-             SphericCoordinate  spheric_n1 = new SphericCoordinate(Double.NaN, 0.6405223126794245, 1.1071487177940904);
-             SphericCoordinate  spheric_n2 = new SphericCoordinate(8.774964387392123, Double.NaN, 1.1071487177940904);
-             SphericCoordinate  spheric_n3 = new SphericCoordinate(8.774964387392123, 0.6405223126794245, Double.NaN);
+         public void testConstructor_withNullValue(){
+             SphericCoordinate  spheric_n1 =  SphericCoordinate.getCoordinate(Double.NaN, 0.6405223126794245, 1.1071487177940904);
+             SphericCoordinate  spheric_n2 =  SphericCoordinate.getCoordinate(8.774964387392123, Double.NaN, 1.1071487177940904);
+             SphericCoordinate  spheric_n3 =  SphericCoordinate.getCoordinate(8.774964387392123, 0.6405223126794245, Double.NaN);
 
+             SphericCoordinate  spheric_n4 =  SphericCoordinate.getCoordinate(Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY);
+             SphericCoordinate  spheric_n5 =  SphericCoordinate.getCoordinate(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY,Double.NEGATIVE_INFINITY);
+             SphericCoordinate  spheric_n6 =  SphericCoordinate.getCoordinate(Double.NEGATIVE_INFINITY,2.0,Double.POSITIVE_INFINITY);
+             SphericCoordinate  spheric_n7 =  SphericCoordinate.getCoordinate(2.0,Double.NEGATIVE_INFINITY,Double.POSITIVE_INFINITY);
+             SphericCoordinate  spheric_n8 =  SphericCoordinate.getCoordinate(Double.NEGATIVE_INFINITY,Double.POSITIVE_INFINITY,2.0);
          }
 
         @Test
@@ -99,7 +104,7 @@ public class SphericCoordinateTest {
         }
 
         @Test(expected=IllegalArgumentException.class)
-        public void testGetCentralAngle_nullValue(){
+        public void testGetCentralAngle_withNullValue(){
             spheric1.getCentralAngle(null);
             spheric2.getCentralAngle(null);
         }
@@ -115,7 +120,7 @@ public class SphericCoordinateTest {
         }
 
         @Test(expected=IllegalArgumentException.class)
-         public void testIsEqual_nullValue(){
+         public void testIsEqual_withNullValue(){
              spheric1.isEqual(null);
              spheric2.isEqual(null);
          }

@@ -20,7 +20,7 @@ public class LocationTest {
 
         @Test
         public void testLocationConstructor(){
-                CartesianCoordinate coord = new CartesianCoordinate(2.0,3.0,4.0);
+                CartesianCoordinate coord = CartesianCoordinate.getCoordinate(2.0,3.0,4.0);
                 Location location = new Location(coord);
 
                 assertEquals(coord,location.getCoordinate());
@@ -28,9 +28,9 @@ public class LocationTest {
 
         @Test
         public void testSetCoordinate(){
-                CartesianCoordinate coord = new CartesianCoordinate(2.0,3.0,4.0);
+                CartesianCoordinate coord = CartesianCoordinate.getCoordinate(2.0,3.0,4.0);
                 Location location = new Location(coord);
-                CartesianCoordinate new_coord = new CartesianCoordinate(3.0,3.0,4.0);
+                CartesianCoordinate new_coord = CartesianCoordinate.getCoordinate(3.0,3.0,4.0);
                 location.setCoordinate(new_coord);
                 assertEquals(new_coord,location.getCoordinate());
         }
@@ -38,7 +38,7 @@ public class LocationTest {
 
         @Test(expected=IllegalArgumentException.class)
         public void testSetNullCoordinate(){
-                CartesianCoordinate coord = new CartesianCoordinate(2.0,3.0,4.0);
+                CartesianCoordinate coord = CartesianCoordinate.getCoordinate(2.0,3.0,4.0);
                 Location location = new Location(coord);
                 location.setCoordinate(null);
         }

@@ -3,6 +3,12 @@ package org.wahlzeit.model;
 public abstract class AbstractCoordinate implements Coordinate {
 
 
+    /**
+     * @methodtype assertion
+     * @param object object to check
+     * @param argument as comment
+     * @throws IllegalArgumentException  if object is null
+     */
     protected void assertIsNotNull(Object object, String argument){
         if(object==null) {
             throw new IllegalArgumentException(argument + " must not be null");
@@ -14,9 +20,10 @@ public abstract class AbstractCoordinate implements Coordinate {
      * @methodtype get
      * @param coordinate the given coordinate
      * @return distance between this coordinate and the given cartesian coordinate
+     * @throws IllegalArgumentException in case coord is null
      */
     @Override
-    public double getCartesianDistance(Coordinate coordinate) throws IllegalArgumentException {
+    public  double getCartesianDistance(Coordinate coordinate) throws IllegalArgumentException {
         assertIsNotNull(coordinate,"The given coordinate" );
         CartesianCoordinate cartesianCoordinate = this.asCartesianCoordinate();
 
@@ -29,6 +36,7 @@ public abstract class AbstractCoordinate implements Coordinate {
      * @methodtype get
      * @param coordinate a Coordinate
      * @return central angle between this Coordinate and the given Coordinate
+     * @throws IllegalArgumentException in case coord is null
      */
     @Override
     public double getCentralAngle (Coordinate coordinate)  throws  IllegalArgumentException{
