@@ -8,7 +8,7 @@ import org.wahlzeit.utils.PatternInstance;
  */
 @PatternInstance(
         patternName = "Abstract Factory",
-        participants = {"AbstractFactory", "ConcreteFactory"}
+        participants = {"AbstractProduct", "ConcreteProduct"}
 )
 
 @Entity
