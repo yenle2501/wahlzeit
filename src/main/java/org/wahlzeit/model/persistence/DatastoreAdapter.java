@@ -28,7 +28,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.services.OfyService;
-
+import org.wahlzeit.utils.PatternInstance;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.InvalidParameterException;
@@ -39,6 +39,10 @@ import java.util.logging.Logger;
  * 
  * @review
  */
+@PatternInstance(
+		patternName = "Adapter",
+		participants = {"DatastoreAdapter"}
+)
 public class DatastoreAdapter extends ImageStorage {
 
 	private static final Logger log = Logger.getLogger(DatastoreAdapter.class.getName());
@@ -115,6 +119,10 @@ public class DatastoreAdapter extends ImageStorage {
  	 * @review
 	 */
 	@Entity
+	@PatternInstance(
+			patternName = "Adapter",
+			participants = {"ImageWrapper"}
+	)
 	public static class ImageWrapper {
 
 		// see https://cloud.google.com/datastore/docs/tools/administration

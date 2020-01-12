@@ -1,10 +1,14 @@
 package org.wahlzeit.model;
 
 import java.util.HashMap;
-
+import org.wahlzeit.utils.PatternInstance;
 /**
  * This class represents the cartesian coordinate system
  */
+@PatternInstance(
+        patternName = "Value Object",
+        participants = {"CartesianCoordinate"}
+)
 public class CartesianCoordinate extends  AbstractCoordinate {
 
     //x,y,z represent point x, y and z in the x-axis, y-axis and z-axis
@@ -16,7 +20,7 @@ public class CartesianCoordinate extends  AbstractCoordinate {
     /**
      * HashSet of all cartesian coordinates
      */
-    private static final HashMap<Integer,CartesianCoordinate> coordinates = new HashMap<>();
+    private static final HashMap<Integer,CartesianCoordinate> coordinates = new HashMap<Integer, CartesianCoordinate>();
 
     /**
      * two double values are assumed equal if it's different is lower than this THRESHOLD
@@ -46,17 +50,13 @@ public class CartesianCoordinate extends  AbstractCoordinate {
      * @return a cartesian coordinate
      */
     public static CartesianCoordinate getCoordinate(double x, double y , double z){
-        CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(x, y, z);
-        int key =  cartesianCoordinate.hashCode();
-        synchronized (coordinates) {
-            if(coordinates.get(key) == null){
+        int key =  computeHashcode(x,y,z);
+            if(!coordinates.containsKey(key)){
+                CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(x, y, z);
                 coordinates.put(key,cartesianCoordinate);
-                return cartesianCoordinate;
+
             }
-            else{
-                return coordinates.get(key);
-            }
-        }
+            return coordinates.get(key);
     }
 
 
@@ -99,11 +99,11 @@ public class CartesianCoordinate extends  AbstractCoordinate {
     @Override
     public SphericCoordinate asSphericCoordinate() {
         double power = Math.pow(this.x,2) + Math.pow(this.y,2) + Math.pow(this.z,2);
-        double r = Math.sqrt(power);
-        double theta = (r > 0.0) ? Math.acos(this.z/r) : 0.0;
+        double radius = Math.sqrt(power);
+        double theta = (radius > 0.0) ? Math.acos(this.z/radius) : 0.0;
         double phi = (x != 0) ?  Math.atan2(this.y, this.x) :  0.0;
 
-        return SphericCoordinate.getCoordinate(r,theta,phi);
+        return SphericCoordinate.getCoordinate(radius,theta,phi);
     }
 
 
@@ -116,13 +116,8 @@ public class CartesianCoordinate extends  AbstractCoordinate {
      */
     @Override
     public boolean isEqual(Coordinate coordinate)  throws IllegalArgumentException {
-        assertIsNotNull(coordinate,"The given Coordinate");
 
-        CartesianCoordinate cartesianCoordinate = coordinate.asCartesianCoordinate();
-        if(cartesianCoordinate.x - this.x < THRESHOLD && cartesianCoordinate.y - this.y < THRESHOLD && cartesianCoordinate.z - this.z < THRESHOLD){
-                return true;
-        }
-        return false;
+        return this == coordinate;
     }
 
     /**
@@ -131,6 +126,10 @@ public class CartesianCoordinate extends  AbstractCoordinate {
      */
     @Override
     public int hashCode() {
+        return computeHashcode(this.x, this.y, this.z);
+    }
+
+    private static int computeHashcode(double x, double y, double z) {
         int hash = 7;
         hash = (int) (Double.doubleToLongBits(x) ^ (Double.doubleToLongBits(x) >>> 32));
         hash = 31 * hash + (int) (Double.doubleToLongBits(y) ^ (Double.doubleToLongBits(y)>>> 32));

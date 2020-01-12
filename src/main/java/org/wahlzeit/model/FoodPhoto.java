@@ -2,9 +2,15 @@ package org.wahlzeit.model;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Subclass;
+import org.wahlzeit.utils.PatternInstance;
 /**
  * A food photo represents a user-provided (uploaded) photo.
  */
+@PatternInstance(
+        patternName = "Abstract Factory",
+        participants = {"AbstractFactory", "ConcreteFactory"}
+)
+
 @Entity
 public class FoodPhoto extends Photo {
 

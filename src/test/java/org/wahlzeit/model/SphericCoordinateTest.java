@@ -70,9 +70,11 @@ public class SphericCoordinateTest {
 
         @Test
         public void testAsCartesianCoordinate(){
+            CartesianCoordinate cartesian_2 = spheric2.asCartesianCoordinate();
 
-            assertEquals(cartesian1, spheric1.asCartesianCoordinate());
-            assertEquals(cartesian2, spheric2.asCartesianCoordinate());
+            assertEquals(cartesian2.getX(), cartesian_2.getX(), THRESHOLD);
+            assertEquals(cartesian2.getY(), cartesian_2.getY(), THRESHOLD);
+            assertEquals(cartesian2.getZ(), cartesian_2.getZ(), THRESHOLD);
         }
 
 
@@ -119,11 +121,6 @@ public class SphericCoordinateTest {
             assertFalse(spheric1.isEqual(spheric2));
         }
 
-        @Test(expected=IllegalArgumentException.class)
-         public void testIsEqual_withNullValue(){
-             spheric1.isEqual(null);
-             spheric2.isEqual(null);
-         }
 
 
     @Test

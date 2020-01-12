@@ -114,11 +114,6 @@ public class CartesianCoordinateTest {
         assertFalse(cartesian1.isEqual(cartesian2));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testIsEqual_withNullValue(){
-        cartesian1.isEqual(null);
-    }
-
     @Test
     public void testEquals(){
         assertTrue(cartesian1.equals(cartesian1));

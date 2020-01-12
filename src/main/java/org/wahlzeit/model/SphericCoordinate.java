@@ -1,10 +1,15 @@
 package org.wahlzeit.model;
 
 import java.util.HashMap;
+import org.wahlzeit.utils.PatternInstance;
 /**
  * This class represents the spherical coordinate system
  * Source: https://en.wikipedia.org/wiki/Spherical_coordinate_system
  */
+@PatternInstance(
+        patternName = "Value Object",
+        participants = { "SphericCoordinate" }
+)
 public class SphericCoordinate extends  AbstractCoordinate {
     // the radial distance: radius  >= 0
     private final double radius;
@@ -20,7 +25,7 @@ public class SphericCoordinate extends  AbstractCoordinate {
     /**
      * HashSet of all spherical coordinates
      */
-    private static final HashMap<Integer,SphericCoordinate> coordinates = new HashMap<>();
+    private static final HashMap<Integer,SphericCoordinate> coordinates = new HashMap<Integer, SphericCoordinate>();
 
 
     /**@param radius:the radial distance: radius  >= 0
@@ -51,16 +56,13 @@ public class SphericCoordinate extends  AbstractCoordinate {
      * @return a spherical coordinate
      */
     public static SphericCoordinate getCoordinate(double radius, double theta, double phi) {
-        SphericCoordinate sphericCoordinate = new SphericCoordinate(radius, theta, phi);
-        int key =  sphericCoordinate.hashCode();
+        int key = computeHashcode(radius, theta, phi);
         synchronized (coordinates) {
-            if(coordinates.get(key) == null){
+            if(!coordinates.containsKey(key)){
+                SphericCoordinate sphericCoordinate = new SphericCoordinate(radius, theta, phi);
                 coordinates.put(key,sphericCoordinate);
-                return sphericCoordinate;
             }
-            else{
-                return coordinates.get(key);
-            }
+            return coordinates.get(key);
         }
     }
 
@@ -71,13 +73,19 @@ public class SphericCoordinate extends  AbstractCoordinate {
     @Override
     public CartesianCoordinate asCartesianCoordinate() {
 
-        double x = radius * Math.sin(theta) * Math.cos(phi);
-        double y = radius * Math.sin(theta) * Math.sin(phi);
-        double z = radius * Math.cos(theta);
+        double x = this.radius * Math.sin(this.theta) * Math.cos(this.phi);
+        double y = this.radius * Math.sin(this.theta) * Math.sin(this.phi);
+        double z = this.radius * Math.cos(this.theta);
 
-        CartesianCoordinate cartesianCoordinate = CartesianCoordinate.getCoordinate(x, y, z);
+        try {
+            assertClassInvariants();
+        }
+        catch( IllegalArgumentException e){
+            throw new IllegalArgumentException("one of 3 paramenters is invalid.");
 
-        return cartesianCoordinate;
+        }
+
+        return CartesianCoordinate.getCoordinate(x, y, z);
     }
 
     /**
@@ -124,30 +132,8 @@ public class SphericCoordinate extends  AbstractCoordinate {
      */
     @Override
     public boolean isEqual(Coordinate coordinate) throws IllegalArgumentException{
-        assertIsNotNull(coordinate,"The given Coordinate" );
 
-        SphericCoordinate sphericCoordinate = coordinate.asSphericCoordinate();
-
-        return isDoubleEqual(sphericCoordinate.radius, radius)
-                && isDoubleEqual(sphericCoordinate.theta, theta)
-                && isDoubleEqual(sphericCoordinate.phi, phi);
-    }
-
-    /** compare two double values
-     * @methodtype boolean query
-     * @param value1 first value
-     *        value2 second value
-     * @return true: if different between two values is lower than threshold
-     *         false: otherwise
-     */
-    private boolean isDoubleEqual(double value1, double value2) throws IllegalArgumentException{
-        assertIsValidDouble(value1);
-        assertIsValidDouble(value2);
-
-        if(Math.abs(value1 - value2) <= THRESHOLD){
-            return true;
-        }
-        return false;
+        return this == coordinate;
     }
 
 
@@ -167,6 +153,14 @@ public class SphericCoordinate extends  AbstractCoordinate {
      */
     @Override
     public int hashCode() {
+        return computeHashcode(this.radius, this.theta, this.phi);
+    }
+
+    /** compute hashcode with given parameters
+    * @return hashcode
+    */
+
+    private static int computeHashcode(double radius, double theta, double phi){
         int hash = 7;
         hash = (int) (Double.doubleToLongBits(radius) ^ (Double.doubleToLongBits(radius) >>> 32));
         hash = 31 * hash + (int) (Double.doubleToLongBits(theta) ^ (Double.doubleToLongBits(theta)>>> 32));

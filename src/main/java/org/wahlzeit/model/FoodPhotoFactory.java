@@ -2,6 +2,13 @@ package org.wahlzeit.model;
 
 import org.wahlzeit.services.LogBuilder;
 import java.util.logging.Logger;
+import org.wahlzeit.utils.PatternInstance;
+
+@PatternInstance(
+        patternName = "Abstract Factory",
+        participants = {"AbstractFactory", "ConcreteFactory"}
+)
+
 /**
  * An FoodPhotoFactory for creating photos and related objects.
  */

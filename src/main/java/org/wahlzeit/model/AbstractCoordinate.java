@@ -1,5 +1,11 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.utils.PatternInstance;
+
+@PatternInstance(
+        patternName = "Template",
+        participants = {"AbstractCoordinate", "Coordinate"}
+)
 public abstract class AbstractCoordinate implements Coordinate {
 
 
@@ -56,16 +62,7 @@ public abstract class AbstractCoordinate implements Coordinate {
      */
     @Override
     public boolean equals(Object obj){
-        if(obj == this){
-            return true;
-        }
-        if (obj instanceof CartesianCoordinate) {
-            return isEqual((CartesianCoordinate) obj);
-        }
-        if (obj instanceof SphericCoordinate) {
-            return isEqual((SphericCoordinate) obj);
-        }
-        return false;
+            return this == obj;
     }
 
 }
