@@ -15,7 +15,7 @@ import org.wahlzeit.utils.PatternInstance;
  */
 public class FoodPhotoFactory  extends PhotoFactory{
     /**
-     * Hidden singleton instance; needs to be initialized from the outside.
+     * Hidden singleton instance; needs to be initialized from the outside
      */
     private static FoodPhotoFactory instance;
     private static final Logger log = Logger.getLogger(PhotoFactory.class.getName());

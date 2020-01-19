@@ -28,14 +28,6 @@ public class FoodPhotoFactoryTest {
         assertEquals(foodPhotoFactory1,foodPhotoFactory2);
     }
 
-    /**
-     * Testcase for method setInstance
-     * */
-    @Test(expected = IllegalStateException.class)
-    public void testSetInstanceWithException(){
-        FoodPhotoFactory foodPhotoFactory =  new FoodPhotoFactory();
-        PhotoFactory.setInstance(foodPhotoFactory);
-    }
 
     /**
      *  Testcase for method createPhoto without PhotoId

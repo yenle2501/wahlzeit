@@ -24,10 +24,13 @@ import org.junit.runners.Suite;
         org.wahlzeit.model.PhotoFilterTest.class,
         org.wahlzeit.model.TagsTest.class,
         org.wahlzeit.model.UserStatusTest.class,
-        org.wahlzeit.model. ValueTest.class,
+        org.wahlzeit.model.ValueTest.class,
         org.wahlzeit.model.FoodPhotoTest.class,
         org.wahlzeit.model.FoodPhotoManagerTest.class,
-        org.wahlzeit.model.FoodPhotoFactoryTest.class
+        org.wahlzeit.model.FoodPhotoFactoryTest.class,
+        org.wahlzeit.model.FoodTest.class,
+        org.wahlzeit.model.FoodTypeTest.class,
+        org.wahlzeit.model.FoodManagerTest.class
 
 
 })
