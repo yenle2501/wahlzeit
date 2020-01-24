@@ -21,6 +21,20 @@ public class FoodManager{
         return foodManager_instance;
     }
 
+
+    public Food createFood(FoodType foodType, String dishname){
+        if(foodType == null) {
+            throw new IllegalArgumentException("foodType should not be null");
+        }
+        if(dishname == null) {
+            throw new IllegalArgumentException("dishname should not be null");
+        }
+        Food newFood = new Food(foodType, dishname);
+        foods.put(dishname, newFood);
+        return newFood;
+    }
+
+
     /**
      * @methodtype boolean-query
      */
@@ -54,7 +68,7 @@ public class FoodManager{
         return foodTypes.get(key);
     }
 
-    public void addDishname(Food dishname) {
+    public void addFood(Food dishname) {
         if (dishname == null) {
             throw new IllegalArgumentException("The given dishname must not be null.");
         }
@@ -69,14 +83,14 @@ public class FoodManager{
     /**
      * @methodtype boolean-query
      */
-    public boolean hasDishname(String dishname) {
+    public boolean hasFood(String dishname) {
         if (dishname == null) {
             throw new IllegalArgumentException("given dishname must not be null.");
         }
         return foods.containsKey(dishname);
     }
 
-    public Food getDishname(String dishname) {
+    public Food getFood(String dishname) {
         if (dishname == null) {
             throw new IllegalArgumentException("The given dishname must not be null.");
         }

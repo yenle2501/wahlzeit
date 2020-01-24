@@ -1,9 +1,9 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.services.LogBuilder;
-import java.util.logging.Logger;
-
 import org.wahlzeit.utils.PatternInstance;
+
+import java.util.logging.Logger;
 
 @PatternInstance(
         patternName = "Abstract Factory",
@@ -62,7 +62,6 @@ public class FoodPhotoFactory  extends PhotoFactory{
      */
     @Override
     public FoodPhoto createPhoto(){
-
         return new FoodPhoto();
     }
 

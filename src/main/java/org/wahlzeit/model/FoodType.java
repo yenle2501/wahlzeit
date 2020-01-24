@@ -34,7 +34,10 @@ public class FoodType  {
         return false;
     }
 
-    public void setParentFoodType(FoodType foodtype){
+    protected void setParentFoodType(FoodType foodtype){
+        if(foodtype == null){
+            throw new IllegalArgumentException("foodtype should not be null");
+        }
         parent_foodtype = foodtype;
     }
 }

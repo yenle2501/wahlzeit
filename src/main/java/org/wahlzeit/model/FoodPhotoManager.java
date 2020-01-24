@@ -6,6 +6,7 @@ package org.wahlzeit.model;
 public class FoodPhotoManager extends PhotoManager{
 
 
+
     /**@methodtype constructor
      * */
     protected FoodPhotoManager(){

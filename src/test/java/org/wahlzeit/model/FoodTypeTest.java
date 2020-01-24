@@ -1,9 +1,10 @@
 package org.wahlzeit.model;
 
-import org.junit.Test;
 import org.junit.Before;
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FoodTypeTest {
 
@@ -19,6 +20,11 @@ public class FoodTypeTest {
         pho = new FoodType("pho");
         phobo = new FoodType("phobo");
 
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testSetParentTypeWithNullValue() {
+        phobo.setParentFoodType(null);
     }
 
     @Test

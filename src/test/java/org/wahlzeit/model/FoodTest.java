@@ -1,9 +1,9 @@
 package org.wahlzeit.model;
 
-import org.junit.Test;
 import org.junit.Before;
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 
 public class FoodTest{
@@ -26,6 +26,19 @@ public class FoodTest{
     @Test
     public void testGetDishname() {
         assertEquals(food.getDishname(), "Pho");
+    }
+
+    @Test
+    public void testSetDishname() {
+        food.setDishname("photai");
+        assertEquals(food.getDishname(), "photai");
+    }
+
+    @Test
+    public void testSetFoodType() {
+        FoodType udon = new FoodType("udon");
+        food.setFoodType(udon);
+        assertEquals(food.getType().getFoodType(), udon.getFoodType());
     }
 
 }

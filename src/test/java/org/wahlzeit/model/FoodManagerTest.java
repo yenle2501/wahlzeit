@@ -1,18 +1,13 @@
 package org.wahlzeit.model;
 
-import org.junit.Test;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import org.junit.*;
-import static org.junit.Assert.*;
 
+import static org.junit.Assert.*;
 
 public class FoodManagerTest{
 
     private FoodManager manager;
-    private FoodType soup;
     private FoodType pho;  // subtype of soup
     private FoodType phobo; //subtype of pho
 
@@ -21,7 +16,6 @@ public class FoodManagerTest{
     public void setup() {
 
         manager = new FoodManager();
-        soup = new FoodType("soup");
         pho = new FoodType("pho");
         phobo = new FoodType("phobo");
 
@@ -44,20 +38,24 @@ public class FoodManagerTest{
         assertFalse(manager.hasFoodType("pho"));
     }
 
-
-
     @Test
-    public void testGetDishname(){
-        manager.addDishname(phobotai);
-
-        assertEquals(phobotai, manager.getDishname("phobotai"));
+    public void testCreateFood(){
+        manager.createFood(pho, "phobotai");
+        assertEquals(manager.getFood("phobotai").getDishname(),phobotai.getDishname());
     }
 
     @Test
-    public void testHasDishname(){
-        manager.addDishname(phobotai);
+    public void testGetPho(){
+        manager.addFood(phobotai);
 
-        assertTrue(manager.hasDishname("phobotai"));
-        assertFalse(manager.hasDishname("pho"));
+        assertEquals(phobotai, manager.getFood("phobotai"));
+    }
+
+    @Test
+    public void testHasFood(){
+        manager.addFood(phobotai);
+
+        assertTrue(manager.hasFood("phobotai"));
+        assertFalse(manager.hasFood("pho"));
     }
 }
