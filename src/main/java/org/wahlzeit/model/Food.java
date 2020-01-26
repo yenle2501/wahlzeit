@@ -21,6 +21,8 @@ package org.wahlzeit.model;
  * =======================================================================================================================
  */
 
+import org.wahlzeit.utils.StringUtil;
+
 public class Food{
 
     public FoodManager manager = FoodManager.getInstance();
@@ -28,25 +30,63 @@ public class Food{
     private FoodType foodtype;
     private String dishname;
 
-
+    /**
+     * @methodtype constructor
+     */
     public Food(FoodType foodtype, String dishname){
+
+        assertFoodTypeValid(foodtype);
+        assertDishnameValid(dishname);
         this.foodtype = foodtype;
         this.dishname = dishname;
     }
 
-
+    /**
+     * @methodtype get
+     */
     public FoodType getType(){
         return foodtype;
     }
 
+    /**
+     * @methodtype set
+     */
     public void setFoodType(FoodType foodtype){
+        assertFoodTypeValid(foodtype);
         this.foodtype = foodtype;
     }
 
+    /**
+     * @methodtype get
+     */
     public String getDishname(){
         return dishname;
     }
+
+    /**
+     * @methodtype set
+     */
     public void setDishname(String dishname){
+        assertDishnameValid( dishname);
         this.dishname = dishname;
     }
+
+    /**
+     * @methodtype assert
+     */
+    private void assertDishnameValid(String dishname) {
+        if (StringUtil.isNullOrEmptyString(dishname)) {
+            throw new IllegalArgumentException("dishname must be not empty.");
+        }
+    }
+
+    /**
+     * @methodtype assert
+     */
+    private void assertFoodTypeValid(FoodType foodtype) {
+        if (foodtype == null) {
+            throw new IllegalArgumentException("foodtype must be not null.");
+        }
+    }
+
 }

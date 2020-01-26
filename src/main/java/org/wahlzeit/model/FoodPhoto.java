@@ -42,7 +42,8 @@ import org.wahlzeit.utils.PatternInstance;
 @Entity
 public class FoodPhoto extends Photo {
 
-    private String dishname;
+    private Food food;
+
     /**
      * @methodtype constructor
      * */
@@ -53,9 +54,9 @@ public class FoodPhoto extends Photo {
      * @methodtype constructor
      *
      * */
-    public FoodPhoto(String dishname){
+    public FoodPhoto(Food food){
         super();
-        this.dishname = dishname;
+        this.food = food;
     }
 
     /**
@@ -68,30 +69,30 @@ public class FoodPhoto extends Photo {
     /**
      * @methodtype constructor
      * */
-    public FoodPhoto(PhotoId myId, String dishname){
+    public FoodPhoto(PhotoId myId, Food food){
         super(myId);
-        this.dishname = dishname;
+        this.food = food;
     }
 
     /**
-     * method to get name of dish
-     * @return dishname
+     * method to get food
+     * @return food
      * @methodtype get
      * @methodproperties primitive
      * */
-    public String getDishname(){
-        return dishname;
+    public Food getFood(){
+        return food;
     }
 
     /**
-     * method to set name for a dish
+     * method to set name for a food
      * @methodtype set
      *
      * */
-    public void setDishname(String dishname) throws IllegalArgumentException{
-        if (dishname == null) {
-            throw new IllegalArgumentException("dishname must not be null");
+    public void setFood(Food food) throws NullPointerException{
+        if (food == null) {
+            throw new NullPointerException("food must not be null");
         }
-        this.dishname = dishname;
+        this.food = food;
     }
 }

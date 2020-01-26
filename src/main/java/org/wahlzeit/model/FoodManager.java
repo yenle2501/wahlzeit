@@ -10,7 +10,9 @@ public class FoodManager{
     private   Map<String, FoodType> foodTypes ;
     private   Map<String, Food> foods ;
 
-
+    /**
+     * @methodtype constructor
+     */
     public FoodManager(){
         foodTypes = new HashMap<String, FoodType>();
         foods = new HashMap<String, Food>();
@@ -21,7 +23,9 @@ public class FoodManager{
         return foodManager_instance;
     }
 
-
+    /**
+     * @methodtype factory
+     */
     public Food createFood(FoodType foodType, String dishname){
         if(foodType == null) {
             throw new IllegalArgumentException("foodType should not be null");
@@ -45,7 +49,9 @@ public class FoodManager{
         return foodTypes.containsKey(foodType);
     }
 
-
+    /**
+     * @methodtype set
+     */
     public void addFoodType(String foodType) {
         if (foodType == null) {
             throw new IllegalArgumentException(" given foodType must not be null.");
@@ -58,6 +64,9 @@ public class FoodManager{
         foodTypes.put(foodType, newfoodtype);
     }
 
+    /**
+     * @methodtype get
+     */
     public FoodType getFoodType(String key) {
         if (key == null) {
             throw new IllegalArgumentException("The given foodType must not be null.");
@@ -68,6 +77,9 @@ public class FoodManager{
         return foodTypes.get(key);
     }
 
+    /**
+     * @methodtype set
+     */
     public void addFood(Food dishname) {
         if (dishname == null) {
             throw new IllegalArgumentException("The given dishname must not be null.");
@@ -90,6 +102,9 @@ public class FoodManager{
         return foods.containsKey(dishname);
     }
 
+    /**
+     * @methodtype get
+     */
     public Food getFood(String dishname) {
         if (dishname == null) {
             throw new IllegalArgumentException("The given dishname must not be null.");
