@@ -3,6 +3,11 @@ package org.wahlzeit.model;
 import java.util.HashMap;
 import java.util.Map;
 
+/**==============================================================================================================
+ * - Manager-element-collaboration: Binds the manager role in collaboration of {@link FoodManager} and {@link Food}.
+ * ==============================================================================================================
+ * */
+
 public class FoodManager{
 
     private   static FoodManager foodManager_instance = new FoodManager();
@@ -80,38 +85,38 @@ public class FoodManager{
     /**
      * @methodtype set
      */
-    public void addFood(Food dishname) {
-        if (dishname == null) {
-            throw new IllegalArgumentException("The given dishname must not be null.");
+    public void addFood(Food food) {
+        if (food == null) {
+            throw new IllegalArgumentException("The given food must not be null.");
         }
-        if (foods.containsKey(dishname)) {
-            throw new IllegalArgumentException(" given dishname exists");
+        if (foods.containsKey(food)) {
+            throw new IllegalArgumentException(" given food exists");
         }
         else {
-            foods.put(dishname.getDishname(), dishname);
+            foods.put(food.getDishname(), food);
         }
     }
 
     /**
      * @methodtype boolean-query
      */
-    public boolean hasFood(String dishname) {
-        if (dishname == null) {
-            throw new IllegalArgumentException("given dishname must not be null.");
+    public boolean hasFood(String food) {
+        if (food == null) {
+            throw new IllegalArgumentException("given food must not be null.");
         }
-        return foods.containsKey(dishname);
+        return foods.containsKey(food);
     }
 
     /**
      * @methodtype get
      */
-    public Food getFood(String dishname) {
-        if (dishname == null) {
-            throw new IllegalArgumentException("The given dishname must not be null.");
+    public Food getFood(String food) {
+        if (food == null) {
+            throw new IllegalArgumentException("The given food must not be null.");
         }
-        if (!foods.containsKey(dishname)) {
-            throw new IllegalArgumentException(" given dishname does not exists");
+        if (!foods.containsKey(food)) {
+            throw new IllegalArgumentException(" given food does not exists");
         }
-        return foods.get(dishname);
+        return foods.get(food);
     }
 }

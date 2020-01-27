@@ -3,6 +3,10 @@ package org.wahlzeit.model;
 
 import org.wahlzeit.utils.StringUtil;
 
+/**==============================================================================================================
+ * - Base Object-Type object-collaboration: Binds the type-object role to {@link FoodType} and "base-object" role to {@link Food}.
+ *==============================================================================================================
+ */
 public class FoodType  {
     public FoodManager manager = FoodManager.getInstance();
 
