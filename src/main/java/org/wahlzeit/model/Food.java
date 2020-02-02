@@ -22,9 +22,9 @@ package org.wahlzeit.model;
  */
 
 /**==============================================================================================================
- * -Client-service-collaboration: Binds the service role in collaboration of {@link FoodPhoto} and {@link Food}.
- * -Base Object-type-object-collaboration:  Binds the base-object role in collaboration of {@link  FoodType} and {@link Food}.
- * -Manager-Element-collaboration: Binds the element role in collaboration of {@link FoodManager} and {@link Food}.
+ * -Client-service-collaboration: Binds the service role in collaboration of {@link FoodPhoto} (client) and {@link Food} (service).
+ * -Base-object-Type-object-collaboration:  Binds the base-object role in collaboration of {@link  FoodType}(type-object) and {@link Food} (base-object).
+ * -Manager-Element-collaboration: Binds the element role in collaboration of {@link FoodManager} (manager) and {@link Food} (element).
  *==============================================================================================================
  */
 import org.wahlzeit.utils.StringUtil;

@@ -33,7 +33,7 @@ import org.wahlzeit.utils.PatternInstance;
 
 /**==============================================================================================================
  * A food photo represents a user-provided (uploaded) photo.
- * -Client-service-collaboration: Binds the client role in collaboration of {@link  FoodPhoto} and  {@link Food}.
+ * -Client-service-collaboration: Binds the client role in collaboration of {@link  FoodPhoto} (Client) and  {@link Food} (Service).
  * ==============================================================================================================
  */
 @PatternInstance(

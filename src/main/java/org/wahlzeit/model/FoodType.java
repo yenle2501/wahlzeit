@@ -4,7 +4,7 @@ package org.wahlzeit.model;
 import org.wahlzeit.utils.StringUtil;
 
 /**==============================================================================================================
- * - Base Object-Type object-collaboration: Binds the type-object role to {@link FoodType} and "base-object" role to {@link Food}.
+ * - Base-object-Type-object-collaboration: Binds the type-object role to {@link FoodType} and to base-object {@link Food}.
  *==============================================================================================================
  */
 public class FoodType  {

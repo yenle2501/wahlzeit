@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**==============================================================================================================
- * - Manager-element-collaboration: Binds the manager role in collaboration of {@link FoodManager} and {@link Food}.
+ * - Manager-element-collaboration: Binds the manager role in collaboration of {@link FoodManager} (manager) and {@link Food} (element).
  * ==============================================================================================================
  * */
 
